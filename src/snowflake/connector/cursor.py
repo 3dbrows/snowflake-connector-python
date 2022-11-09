@@ -238,7 +238,7 @@ class SnowflakeCursor:
         self._sequence_counter = -1
         self._request_id = None
         self._is_file_transfer = False
-        self._multi_statement_resultIds: deque = deque([])
+        self._multi_statement_resultIds: deque[str] = deque([])
         self.multi_statement_savedIds: list[str] = []
 
         self._timestamp_output_format = None
@@ -1060,7 +1060,7 @@ class SnowflakeCursor:
             return self
 
         if self.INSERT_SQL_RE.match(command) and (
-            "num_statements" not in kwargs or kwargs["num_statements"] == 1
+            "num_statements" not in kwargs or kwargs.get("num_statements") == 1
         ):
             if self._connection.is_pyformat:
                 # TODO - utilize multi-statement instead of rewriting the query and
