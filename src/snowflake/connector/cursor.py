@@ -1152,7 +1152,9 @@ class SnowflakeCursor:
                 query = command * len(seqparams)
                 params = [param for parameters in seqparams for param in parameters]
 
-            kwargs["num_statements"] *= len(seqparams)
+            kwargs["num_statements"]: int = kwargs.get("num_statements") * len(
+                seqparams
+            )
 
             self.execute(query, params, _do_reset=False, **kwargs)
 
